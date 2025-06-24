@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TempConvert Pro</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <main class="app">
+    <header><h1>Temperature Convert</h1></header>
+    <section class="card">
+      <label for="temperature">Temperature:</label>
+      <input type="text" id="temperature" placeholder="e.g. 100" />
+      
+      <div class="units">
+        <label><input type="radio" name="unit" value="C" checked /> Celsius</label>
+        <label><input type="radio" name="unit" value="F" /> Fahrenheit</label>
+        <label><input type="radio" name="unit" value="K" /> Kelvin</label>
+      </div>
+      
+      <button onclick="convert()">Convert</button>
+      <div id="output"></div>
+    </section>
+  </main>
+
+  <script>
+    function convert() {
+      const val = parseFloat(document.getElementById('temperature').value);
+      const unit = document.querySelector('input[name="unit"]:checked').value;
+      const out = document.getElementById('output');
+      if (isNaN(val)) {
+        out.textContent = "Please enter a valid number.";
+        return;
+      }
+
+      let C, F, K;
+      if (unit === "C") {
+        C = val;
+        F = (val * 9/5) + 32;
+        K = val + 273.15;
+      } else if (unit === "F") {
+        C = (val - 32) * 5/9;
+        F = val;
+        K = C + 273.15;
+      } else {
+        K = val;
+        C = val - 273.15;
+        F = (C * 9/5) + 32;
+      }
+
+      out.innerHTML = `
+        <p>🌡️ Celsius: ${C.toFixed(2)} °C</p>
+        <p>🔥 Fahrenheit: ${F.toFixed(2)} °F</p>
+        <p>❄️ Kelvin: ${K.toFixed(2)} K</p>
+      `;
+    }
+  </script>
+</body>
+</html>
